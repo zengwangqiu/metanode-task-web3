@@ -34,6 +34,12 @@ contract Volting {
     }
 
     function resetVotes() external onlyOwner {
-        
+        uint256 totalVotes;
+        for (uint256 i = 0; i < _candidates.length(); i++) {
+            string memory candidate = _candidates.at(i);
+            totalVotes += _votes[candidate];
+            delete _votes[candidate];
+        }
+        emit VotesReset(msg.sender, totalVotes);
     }
 }
